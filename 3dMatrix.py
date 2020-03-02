@@ -95,8 +95,19 @@ class Matrix3:
         if (self.m, self.n, self.o) == (2, 2, 2):
             return self[0, 0, 0] * self[1, 1, 1] + self[0, 1, 1] * self[1, 0, 0] - self[0, 1, 0] * self[1, 0, 1] - self[0, 0, 1] * self[1, 1, 0] 
 
+def newMatrix(values):
+    nm = Matrix3(len(values), len(values[0]), len(values[0][0]))
+    for i in range(len(values)):
+        for j in range(len(values[0])):
+            for k in range(len(values[0][0])):
+                nm[i, j, k] = values[i][j][k]
+    return nm
+
 A = Matrix3(2, 2, 2)
-A.values = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
+A.values = [[[1, 2],
+             [3, 4]],
+                [[5, 6],
+                 [7, 8]]]
 
 B = Matrix3(2, 2, 2)
 B.values = [[[1, 5], [3, 7]], [[2, 6], [4, 8]]]
