@@ -33,16 +33,26 @@ class Matrix3:
         return string
 
     def __add__(self, other):
-        if self.m is not other.m or self.n is not other.n or self.o is not other.o:
-            raise MatricesOfDifferentOrder
-            
-        output = Matrix3(self.m, self.n, self.o)
-        for i in range(self.m):
-            for j in range(self.n):
-                for k in range(self.o):
-                    output.values[i][j][k] = self.values[i][j][k] + other.values[i][j][k]
+        if isinstance(other, int):
+            output = Matrix3(self.m, self.n, self.o)
+            for i in range(self.m):
+                for j in range(self.n):
+                    for k in range(self.o):
+                        output.values[i][j][k] = self.values[i][j][k] + other
 
-        return output
+            return output
+        
+        elif isinstance(other, Matrix3):
+            if self.m is not other.m or self.n is not other.n or self.o is not other.o:
+                raise MatricesOfDifferentOrder
+                
+            output = Matrix3(self.m, self.n, self.o)
+            for i in range(self.m):
+                for j in range(self.n):
+                    for k in range(self.o):
+                        output.values[i][j][k] = self.values[i][j][k] + other.values[i][j][k]
+
+            return output
 
     def __sub__(self, other):
         if self.m is not other.m or self.n is not other.n or self.o is not other.o:
