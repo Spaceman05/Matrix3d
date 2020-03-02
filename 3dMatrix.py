@@ -96,17 +96,28 @@ class Matrix3:
         if len(irange) == 1 and len(jrange) == 1 and len(krange) == 1:
             return self.values[indices[0]][indices[1]][indices[2]]
             
-        return [[[self.values[i][j][k] for k in krange] for j in jrange] for i in irange]
+        return newMatrix([[[self.values[i][j][k] for k in krange] for j in jrange] for i in irange])
 
     def __setitem__(self, indices, value):
         self.values[indices[0]][indices[1]][indices[2]] = value
 
     def det(self):
         if (self.m, self.n, self.o) == (2, 2, 2):
-            return self[0, 0, 0] * self[1, 1, 1] + self[0, 1, 1] * self[1, 0, 0] - self[0, 1, 0] * self[1, 0, 1] - self[0, 0, 1] * self[1, 1, 0] 
+            return self[0, 0, 0] * self[1, 1, 1] + self[0, 1, 1] * self[1, 0, 0] - self[0, 1, 0] * self[1, 0, 1] - self[0, 0, 1] * self[1, 1, 0]
+
+        if (self.m, self.n, self.o) == (3, 3, 3):
+            curSum = 0
+            for i in range(self.m):
+                for j in range(self.n):
+                    for k in range(self.o):
+                        subValues = [[[self[a, b, c] for c in range(0, self.o) if c is not k] for b in range(0, self.n) if b is not j] for a in range(0, self.m) if a is not i]
+                        curSum += ( (-1)**(i + j + k) ) * newMatrix(subValues).det()
+            return curSum
+                        
+        
 
     def __mul__(self, other):
-        output = self
+        output = newMatrix(self.values)
         if isinstance(other, int):
             for i in range(self.m):
                 for j in range(self.n):
@@ -131,3 +142,13 @@ A.values = [[[1, 2],
 
 B = Matrix3(2, 2, 2)
 B.values = [[[1, 5], [3, 7]], [[2, 6], [4, 8]]]
+
+C = newMatrix([[[1, 2, 3],
+                [4, 5, 6],
+                [7, 8, 9]],
+                       [[10, 11, 12],
+                        [13, 14, 15],
+                        [16, 17, 18]],
+                                   [[19, 20, 21],
+                                    [22, 23, 24],
+                                    [25, 26, 27]]])
