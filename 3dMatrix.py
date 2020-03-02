@@ -101,7 +101,7 @@ class Matrix3:
             for i in range(self.m):
                 for j in range(self.n):
                     for k in range(self.o):
-                        new[i, j, k] *= other
+                        output[i, j, k] *= other
 
         return output
 
