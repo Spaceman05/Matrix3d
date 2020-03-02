@@ -95,6 +95,16 @@ class Matrix3:
         if (self.m, self.n, self.o) == (2, 2, 2):
             return self[0, 0, 0] * self[1, 1, 1] + self[0, 1, 1] * self[1, 0, 0] - self[0, 1, 0] * self[1, 0, 1] - self[0, 0, 1] * self[1, 1, 0] 
 
+    def __mul__(self, other):
+        output = self
+        if isinstance(other, int):
+            for i in range(self.m):
+                for j in range(self.n):
+                    for k in range(self.o):
+                        new[i, j, k] *= other
+
+        return output
+
 def newMatrix(values):
     nm = Matrix3(len(values), len(values[0]), len(values[0][0]))
     for i in range(len(values)):
