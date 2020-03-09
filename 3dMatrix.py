@@ -109,9 +109,8 @@ class Matrix3:
             curSum = 0
             for i in range(self.m):
                 for j in range(self.n):
-                    for k in range(self.o):
-                        subValues = [[[self[a, b, c] for c in range(0, self.o) if c is not k] for b in range(0, self.n) if b is not j] for a in range(0, self.m) if a is not i]
-                        curSum += ( (-1)**(i + j + k) ) * newMatrix(subValues).det()
+                    subValues = [[[self[a, b, c] for c in range(1, self.o)] for b in range(0, self.n) if b is not j] for a in range(0, self.m) if a is not i]
+                    curSum += ( (-1)**(i + j) ) * self[i, j, 0] * newMatrix(subValues).det()
             return curSum
                         
         
@@ -152,3 +151,13 @@ C = newMatrix([[[1, 2, 3],
                                    [[19, 20, 21],
                                     [22, 23, 24],
                                     [25, 26, 27]]])
+
+D = newMatrix([[[4, 7, 5],
+                [6, 2, 8],
+                [9, 1, 3]],
+                       [[1, 8, 3],
+                        [5, 9, 4],
+                        [7, 2, 6]],
+                                [[5, 3, 4],
+                                 [8, 1, 6],
+                                 [2, 9, 7]]])
