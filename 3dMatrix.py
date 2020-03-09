@@ -105,7 +105,7 @@ class Matrix3:
         if (self.m, self.n, self.o) == (2, 2, 2):
             return self[0, 0, 0] * self[1, 1, 1] + self[0, 1, 1] * self[1, 0, 0] - self[0, 1, 0] * self[1, 0, 1] - self[0, 0, 1] * self[1, 1, 0]
 
-        if (self.m, self.n, self.o) == (3, 3, 3):
+        elif (self.m, self.n) == (self.n, self.o):
             curSum = 0
             for i in range(self.m):
                 for j in range(self.n):
@@ -125,6 +125,12 @@ class Matrix3:
 
         return output
 
+    def __eq__(self, other):
+        if self.values == other.values:
+            return True
+        else:
+            return False
+        
 def newMatrix(values):
     nm = Matrix3(len(values), len(values[0]), len(values[0][0]))
     for i in range(len(values)):
@@ -132,6 +138,9 @@ def newMatrix(values):
             for k in range(len(values[0][0])):
                 nm[i, j, k] = values[i][j][k]
     return nm
+
+def indexMatrix(size):
+    return newMatrix([[[(i + j + k) for k in range(size)] for j in range(size)] for i in range(size)])
 
 A = Matrix3(2, 2, 2)
 A.values = [[[1, 2],
